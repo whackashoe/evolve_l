@@ -14,32 +14,6 @@ struct LSystem
 
     LSystem();
 
-    friend std::ostream& operator<< (std::ostream& stream, const LSystem& lsys)
-    {
-        for(size_t i=0; i<lsys.rules.size(); ++i) {
-            stream << "FROM: \t";
-            for(size_t j=0; j<lsys.rules[i].from.size(); ++j) {
-                stream << (char) ('A' + lsys.rules[i].from[j]) << " ";
-            }
-            stream << std::endl;
-
-            stream << "TO: \t";
-            for(size_t j=0; j<lsys.rules[i].to.size(); ++j) {
-                stream << (char) ('A' + lsys.rules[i].to[j]) << " ";
-            }
-            stream << std::endl;
-        }
-
-        for(size_t i=0; i<lsys.data.size(); ++i) {
-            stream << (char) ('A' + lsys.data[i]) << " ";
-        }
-
-        stream << std::endl;
-
-        return stream;
-    }
-
-
     bool match(const int data_p, const int rule_p) const;
 
     void iterate();
