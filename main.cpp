@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
         }
 
 
-        if(i % 100 == 0) {
+        if(i % settings.print_regularity == 0) {
             std::cout << i << "\t" << *min_distance << "\t" << average_distance << std::endl;
             std::cout << best << std::endl;
         }

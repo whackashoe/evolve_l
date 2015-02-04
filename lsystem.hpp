@@ -14,6 +14,8 @@ struct LSystem
 
     LSystem();
 
+    friend std::ostream& operator<< (std::ostream& stream, const LSystem& lsys);
+
     bool match(const int data_p, const int rule_p) const;
 
     void iterate();
