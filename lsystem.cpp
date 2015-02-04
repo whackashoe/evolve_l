@@ -9,7 +9,7 @@
 LSystem::LSystem() {}
 
 
-bool LSystem::match(int data_p, int rule_p)
+bool LSystem::match(int data_p, int rule_p) const
 {
     auto rule_s = rules[rule_p].from.size();
     if(data_p + rule_s > data.size()) {
@@ -62,7 +62,7 @@ void LSystem::iterate(const std::vector<int> axiom, int n)
     }
 }
 
-int LSystem::distance(const std::vector<int> & target)
+int LSystem::distance(const std::vector<int> & target) const
 {
     return levenshtein_distance(data, target);
 }

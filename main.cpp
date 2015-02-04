@@ -11,18 +11,21 @@
 #include "settings.hpp"
 
 
-double median(std::vector<int> vals)
+double mean(std::vector<int> vals)
 {
-    size_t size = vals.size();
-    sort(vals.begin(), vals.end());
-    return (size % 2 == 0) ? (vals[size / 2 - 1] + vals[size / 2]) / 2 : vals[size / 2]; 
+    double rval { 0.0 };
+    for(int i=0; i<vals.size(); ++i) rval += vals[i];
+    return rval / vals.size();
 }
+
 
 int main(int argc, char ** argv)
 {
     Settings settings {};
+    settings.grammar_size = 7;
+
     Rng rng { settings.grammar_size };
-    settings.init_train(rng);
+    settings.init_train(rng, 100);
 
     settings.print_input_and_target();
 
@@ -34,14 +37,17 @@ int main(int argc, char ** argv)
     }
 
     for(int i=0; i<settings.max_iterations; ++i) {
-        std::vector<int> distances;
+        std::vector<int> distances(population.size());
 
         for(int j=0; j<population.size(); ++j) {
-            population[j].iterate(settings.input, 5);
-            distances.push_back(population[j].distance(settings.target));
+            population[j].iterate(settings.input, settings.run_iterations);
         }
 
-        float average_distance = median(distances);
+        for(int j=0; j<population.size(); ++j) {
+            distances[j] = population[j].distance(settings.target);
+        }
+
+        float average_distance = mean(distances);
 
         auto min_distance = std::min_element(distances.begin(), distances.end());
         auto best = population[std::distance(distances.begin(), min_distance)];
@@ -60,7 +66,7 @@ int main(int argc, char ** argv)
         }
 
 
-        if(i % 1000 == 0) {
+        if(i % 10 == 0) {
             std::cout << i << "\t" << *min_distance << "\t" << average_distance << std::endl;
             std::cout << best << std::endl;
         }

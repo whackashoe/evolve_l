@@ -40,13 +40,13 @@ struct LSystem
     }
 
 
-    bool match(int data_p, int rule_p);
+    bool match(const int data_p, const int rule_p) const;
 
     void iterate();
 
-    void iterate(const std::vector<int> axiom, int n);
+    void iterate(const std::vector<int> axiom, const int n);
 
-    int distance(const std::vector<int> & target);
+    int distance(const std::vector<int> & target) const;
 
     void mutate(Rng & rng);
 

@@ -13,16 +13,14 @@ struct Settings
     size_t grammar_size;
     size_t run_iterations;
     size_t max_iterations;
-    size_t train_length;
 
     Settings() : 
-    population_size(20), 
+    population_size(30), 
     grammar_size(8), 
-    run_iterations(50), 
-    max_iterations(100000), 
-    train_length(10) {}
+    run_iterations(10), 
+    max_iterations(100000) {}
 
-    void init_train(Rng & rng)
+    void init_train(Rng & rng, int train_length)
     {
         for(int i=0; i<train_length; ++i) {
             input.push_back(rng.grammar_dis(rng.gen));
@@ -32,13 +30,13 @@ struct Settings
 
     void print_input_and_target()
     {
-        std::cout << "INPUT:  \t";
+        std::cout << "INPUT: "  << std::endl << "\t";
         for(int i=0; i<input.size(); ++i) {
             std::cout << input[i] << " ";
         }
         std::cout << std::endl;
 
-        std::cout << "TARGET: \t";
+        std::cout << "TARGET: " << std::endl << "\t";
         for(int i=0; i<target.size(); ++i) {
             std::cout << target[i] << " ";
         }
