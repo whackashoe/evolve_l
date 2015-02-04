@@ -13,6 +13,19 @@ void Settings::init_train(const size_t train_length)
     }
 }
 
+void Settings::init_train(const size_t input_length, const size_t target_length)
+{
+    Rng rng(grammar_size);
+    for(size_t i=0; i<input_length; ++i) {
+        input.push_back(rng.grammar_dis(rng.gen));
+    }
+    for(size_t i=0; i<target_length; ++i) {
+        target.push_back(rng.grammar_dis(rng.gen));
+    }
+}
+
+
+
 //print out our input and target fields we wish to match to
 void Settings::print_input_and_target()
 {

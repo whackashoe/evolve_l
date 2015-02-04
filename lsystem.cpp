@@ -89,12 +89,26 @@ void LSystem::iterate()
 }
 
 //utility function
-void LSystem::iterate(const std::vector<int> & axiom, int n)
+void LSystem::iterate(const std::vector<int> & axiom, const int n)
 {
     data = axiom;
 
     for(int i=0; i<n; ++i) {
         iterate();
+    }
+}
+
+//utility function
+void LSystem::iterate_print(const std::vector<int> & axiom, const int n)
+{
+    data = axiom;
+
+    for(int i=0; i<n; ++i) {
+        iterate();
+        for(size_t i=0; i<data.size(); ++i) {
+            std::cout << (char) ('A' + data[i]) << " ";
+        }
+        std::cout << std::endl;
     }
 }
 

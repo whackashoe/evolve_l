@@ -28,6 +28,8 @@ struct Settings
 
     void init_train(const size_t train_length);
 
+    void init_train(const size_t input_length, const size_t target_length);
+
     void print_input_and_target();
 };
 
