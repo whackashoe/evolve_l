@@ -2,16 +2,16 @@
 #include "universe.hpp"
 #include "utility.hpp"
 
-void Universe::populate_universe()
+void Universe::populate_universe(Settings & settings)
 {
-    LSystem rls = LSystem::generate_random_lsystem(rng);
+    LSystem rls = LSystem::generate_random_lsystem(settings.rng);
     for(size_t i=0; i<settings.population_size; ++i) {
-        rls.mutate(rng);
+        rls.mutate(settings.rng);
         population.push_back(rls);
     }
 }
 
-void Universe::run()
+void Universe::run(Settings & settings)
 {
     //store how far away from target each system in population is
     std::vector<int> distances(population.size());
@@ -42,10 +42,10 @@ void Universe::run()
                 //tough world, eh?
                 size_t mate_pos;
                 do {
-                    mate_pos = rng.rng_dis(rng.gen) % distances.size();
+                    mate_pos = settings.rng.rng_dis(settings.rng.gen) % distances.size();
                 } while(mate_pos != cur && distances[mate_pos] > average_distance);
 
-                population[cur] = LSystem::sexual_reproduction(population[cur], population[mate_pos], rng);
+                population[cur] = LSystem::sexual_reproduction(population[cur], population[mate_pos], settings.rng);
             }
         }
 

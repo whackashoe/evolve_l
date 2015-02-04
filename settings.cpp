@@ -6,7 +6,7 @@
 //alternatively we could set these manually in main
 void Settings::init_train(const size_t train_length)
 {
-    Rng rng(grammar_size);
+    Rng rng;
     for(size_t i=0; i<train_length; ++i) {
         input.push_back(rng.grammar_dis(rng.gen));
         target.push_back(rng.grammar_dis(rng.gen));
@@ -15,7 +15,7 @@ void Settings::init_train(const size_t train_length)
 
 void Settings::init_train(const size_t input_length, const size_t target_length)
 {
-    Rng rng(grammar_size);
+    Rng rng;
     for(size_t i=0; i<input_length; ++i) {
         input.push_back(rng.grammar_dis(rng.gen));
     }

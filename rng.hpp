@@ -7,20 +7,20 @@ struct Rng
 {
     std::random_device rd;
     std::mt19937_64 gen;
-    std::uniform_int_distribution<int> grammar_dis;
-    std::uniform_int_distribution<int> rng_dis;
-    std::uniform_int_distribution<int> mutate_dis;
-    std::uniform_int_distribution<int> mutate_ins_dis;
-    std::uniform_int_distribution<int> mutate_rins_dis;
+    std::uniform_int_distribution<int> grammar_dis;     //to get random grammar piece within our grammar size
+    std::uniform_int_distribution<int> rng_dis;         //general purpose random generator
+    std::uniform_int_distribution<int> mutate_dis;      //how often to mutate a piece of a rule
+    std::uniform_int_distribution<int> mutate_ins_dis;  //how often should we create or delete a piece of a rule
+    std::uniform_int_distribution<int> mutate_rins_dis; //how often should we create or delete a rule
 
-    Rng(const size_t grammar_size) : 
-    rd(), 
-    gen(rd()), 
-    grammar_dis(0, grammar_size), //to get random grammar piece within our grammar size
-    rng_dis(0, 1000),             //general purpose random generator
-    mutate_dis(0, 200),           //how often to mutate a piece of a rule
-    mutate_ins_dis(0, 400),       //how often should we create or delete a piece of a rule
-    mutate_rins_dis(0, 800)       //how often should we create or delete a rule
+    Rng() : 
+    rd(),
+    gen(rd()),
+    grammar_dis(0, 8),
+    rng_dis(0, 1000),
+    mutate_dis(0, 200),
+    mutate_ins_dis(0, 400),
+    mutate_rins_dis(0, 800)
     {}
 };
 
