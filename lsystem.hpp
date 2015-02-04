@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <iostream>
-#include "levenshtein_distance.hpp"
+#include "utility.hpp"
 #include "lrule.hpp"
 #include "rng.hpp"
 

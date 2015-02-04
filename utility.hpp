@@ -1,5 +1,5 @@
-#ifndef LEVENSHTEIN_DISTANCE_H
-#define LEVENSHTEIN_DISTANCE_H
+#ifndef UTILITY_H
+#define UTILITY_H
 
 #include <vector>
 #include <algorithm>
@@ -32,6 +32,17 @@ unsigned int levenshtein_distance(const T & a, const T & b)
     }
 
     return prev_col[len2];
+}
+
+//calculate the average of a set of values
+template <typename T>
+double mean(std::vector<T> vals)
+{
+    double rval { 0.0 };
+    for(size_t i=0; i<vals.size(); ++i) {
+        rval += vals[i];
+    }
+    return rval / vals.size();
 }
 
 #endif

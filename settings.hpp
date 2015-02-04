@@ -26,7 +26,7 @@ struct Settings
     print_regularity(10)    //how many iterations between printing current status
     {}
 
-    void init_train(Rng & rng, const size_t train_length);
+    void init_train(const size_t train_length);
 
     void print_input_and_target();
 };

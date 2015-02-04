@@ -1,10 +1,12 @@
 #include "settings.hpp"
+#include "rng.hpp"
 
 //initializes the INPUT and TARGET fields with random data
 //of train_length length. 
 //alternatively we could set these manually in main
-void Settings::init_train(Rng & rng, const size_t train_length)
+void Settings::init_train(const size_t train_length)
 {
+    Rng rng(grammar_size);
     for(size_t i=0; i<train_length; ++i) {
         input.push_back(rng.grammar_dis(rng.gen));
         target.push_back(rng.grammar_dis(rng.gen));
