@@ -19,19 +19,19 @@ struct LSystem
         for(size_t i=0; i<lsys.rules.size(); ++i) {
             stream << "FROM: \t";
             for(size_t j=0; j<lsys.rules[i].from.size(); ++j) {
-                stream << lsys.rules[i].from[j] << " ";
+                stream << (char) ('A' + lsys.rules[i].from[j]) << " ";
             }
             stream << std::endl;
 
             stream << "TO: \t";
             for(size_t j=0; j<lsys.rules[i].to.size(); ++j) {
-                stream << lsys.rules[i].to[j] << " ";
+                stream << (char) ('A' + lsys.rules[i].to[j]) << " ";
             }
             stream << std::endl;
         }
 
         for(size_t i=0; i<lsys.data.size(); ++i) {
-            stream << lsys.data[i] << " ";
+            stream << (char) ('A' + lsys.data[i]) << " ";
         }
 
         stream << std::endl;

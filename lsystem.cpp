@@ -37,8 +37,7 @@ void LSystem::iterate()
             auto r = rules[j];
 
             if(match(i, j)) {
-                auto rto = r.to;
-                rval.insert(rval.end(), rto.begin(), rto.end());
+                rval.insert(rval.end(), r.to.begin(), r.to.end());
                 found = true;
                 i += r.from.size();
                 break;

@@ -18,7 +18,7 @@ struct Settings
     input(),
     target(),
     population_size(30), 
-    grammar_size(8), 
+    grammar_size(6), 
     run_iterations(10), 
     max_iterations(100000) {}
 
@@ -34,13 +34,13 @@ struct Settings
     {
         std::cout << "INPUT: "  << std::endl << "\t";
         for(size_t i=0; i<input.size(); ++i) {
-            std::cout << input[i] << " ";
+            std::cout << (char) ('A' + input[i]) << " ";
         }
         std::cout << std::endl;
 
         std::cout << "TARGET: " << std::endl << "\t";
         for(size_t i=0; i<target.size(); ++i) {
-            std::cout << target[i] << " ";
+            std::cout << (char) ('A' + target[i]) << " ";
         }
         std::cout << std::endl;
         std::cout << std::endl;
