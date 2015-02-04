@@ -4,7 +4,7 @@ SOURCES= $(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp, %.o, $(SOURCES))
 TARGET=$(lastword $(subst /, ,$(realpath .)))
 
-CXX=clang++
+CXX=g++
 
 all: $(TARGET)
 	@echo evolve_l built

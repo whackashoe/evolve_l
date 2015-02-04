@@ -21,7 +21,7 @@ struct Settings
     population_size(32), 
     grammar_size(8), 
     run_iterations(10), 
-    max_iterations(10000),
+    max_iterations(100000),
     print_regularity(10) {}
 
     void init_train(Rng & rng, const size_t train_length);
