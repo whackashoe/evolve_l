@@ -9,10 +9,10 @@ std::vector<int> input;
 std::vector<int> target;
 
 size_t population_size { 20 };
-size_t grammar_size { 10 };
+size_t grammar_size { 8 };
 size_t run_iterations { 50 };
 size_t max_iterations { 10000000 };
-size_t train_length { 100 };
+size_t train_length { 10 };
 
 std::random_device rd;
 std::mt19937_64 gen(rd());
@@ -24,21 +24,31 @@ std::uniform_int_distribution<int> mutate_rins_dis(0, 800);
 
 
 //http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.2B.2B
-template<class T>
-unsigned int levenshtein_distance(const T &s1, const T & s2) {
-    const size_t len1 = s1.size(), len2 = s2.size();
-    std::vector<unsigned int> col(len2+1), prevCol(len2+1);
+template <typename T>
+unsigned int levenshtein_distance(const T & s1, const T & s2)
+{
+    const size_t len1 { s1.size() };
+    const size_t len2 { s2.size() };
+    std::vector<int> col(len2+1);
+    std::vector<int> prev_col(len2+1);
  
-    for (unsigned int i = 0; i < prevCol.size(); i++)
-        prevCol[i] = i;
-    for (unsigned int i = 0; i < len1; i++) {
-        col[0] = i+1;
-        for (unsigned int j = 0; j < len2; j++)
-            col[j+1] = std::min( std::min(prevCol[1 + j] + 1, col[j] + 1),
-                                prevCol[j] + (s1[i]==s2[j] ? 0 : 1) );
-        col.swap(prevCol);
+    for (int i = 0; i < prev_col.size(); i++) {
+        prev_col[i] = i;
     }
-    return prevCol[len2];
+
+    for (int i = 0; i < len1; i++) {
+        col[0] = i+1;
+
+        for (int j = 0; j < len2; j++){
+            col[j+1] = std::min(
+                std::min(prev_col[1 + j] + 1, col[j] + 1),
+                prev_col[j] + (s1[i] == s2[j] ? 0 : 1)
+            );
+        }
+        
+        col.swap(prev_col);
+    }
+    return prev_col[len2];
 }
 
 
