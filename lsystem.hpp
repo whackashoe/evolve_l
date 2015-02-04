@@ -44,7 +44,7 @@ struct LSystem
 
     void iterate();
 
-    void iterate(const std::vector<int> axiom, const int n);
+    void iterate(const std::vector<int> & axiom, const int n);
 
     int distance(const std::vector<int> & target) const;
 

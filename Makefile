@@ -1,10 +1,10 @@
-CXXFLAGS=-O2 -std=c++11 -Wall -Wextra -Weffc++ -fopenmp 
+CXXFLAGS=-O2 -std=c++11 -Wall -Wextra -Weffc++
 
 SOURCES= $(wildcard *.cpp)
 OBJECTS=$(patsubst %.cpp, %.o, $(SOURCES))
 TARGET=$(lastword $(subst /, ,$(realpath .)))
 
-CXX=g++
+CXX=clang++
 
 all: $(TARGET)
 	@echo evolve_l built

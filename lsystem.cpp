@@ -9,7 +9,7 @@
 LSystem::LSystem() : rules(), data() {}
 
 
-bool LSystem::match(int data_p, int rule_p) const
+bool LSystem::match(const int data_p, const int rule_p) const
 {
     auto rule_s = rules[rule_p].from.size();
     if(data_p + rule_s > data.size()) {
@@ -28,6 +28,7 @@ bool LSystem::match(int data_p, int rule_p) const
 void LSystem::iterate()
 {
     std::vector<int> rval;
+    rval.reserve(data.size());
 
     for(size_t i=0; i<data.size(); ) {
         bool found = false;
@@ -53,7 +54,7 @@ void LSystem::iterate()
     data = rval;
 }
 
-void LSystem::iterate(const std::vector<int> axiom, int n)
+void LSystem::iterate(const std::vector<int> & axiom, int n)
 {
     data = axiom;
 
