@@ -22,11 +22,8 @@ double mean(std::vector<int> vals)
 int main(int argc, char ** argv)
 {
     Settings settings {};
-    settings.grammar_size = 3;
-    settings.population_size = 32;
-
     Rng rng { settings.grammar_size };
-    settings.init_train(rng, 60);
+    settings.init_train(rng, 20);
 
     settings.print_input_and_target();
 
@@ -72,6 +69,8 @@ int main(int argc, char ** argv)
             std::cout << best << std::endl;
         }
     }
+
+    settings.print_input_and_target();
 
     return 0;
 }

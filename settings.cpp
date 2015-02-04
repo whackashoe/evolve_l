@@ -11,13 +11,13 @@ void Settings::init_train(Rng & rng, const size_t train_length)
 
 void Settings::print_input_and_target()
 {
-    std::cout << "INPUT: "  << std::endl << "\t";
+    std::cout << "INPUT: "  << std::endl;
     for(size_t i=0; i<input.size(); ++i) {
         std::cout << (char) ('A' + input[i]) << " ";
     }
     std::cout << std::endl;
 
-    std::cout << "TARGET: " << std::endl << "\t";
+    std::cout << "TARGET: " << std::endl;
     for(size_t i=0; i<target.size(); ++i) {
         std::cout << (char) ('A' + target[i]) << " ";
     }

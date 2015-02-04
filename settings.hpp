@@ -18,10 +18,10 @@ struct Settings
     Settings() : 
     input(),
     target(),
-    population_size(30), 
-    grammar_size(6), 
+    population_size(32), 
+    grammar_size(8), 
     run_iterations(10), 
-    max_iterations(100000),
+    max_iterations(10000),
     print_regularity(10) {}
 
     void init_train(Rng & rng, const size_t train_length);
