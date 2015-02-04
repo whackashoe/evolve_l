@@ -10,11 +10,14 @@
 #include "rng.hpp"
 #include "settings.hpp"
 
-
-double mean(std::vector<int> vals)
+//calculate the average of a set of values
+template <typename T>
+double mean(std::vector<T> vals)
 {
     double rval { 0.0 };
-    for(size_t i=0; i<vals.size(); ++i) rval += vals[i];
+    for(size_t i=0; i<vals.size(); ++i) {
+        rval += vals[i];
+    }
     return rval / vals.size();
 }
 
@@ -22,8 +25,11 @@ double mean(std::vector<int> vals)
 int main(int argc, char ** argv)
 {
     Settings settings {};
+    settings.print_regularity = 1;
+    settings.grammar_size = 23;
+    settings.run_iterations = 100;
     Rng rng { settings.grammar_size };
-    settings.init_train(rng, 20);
+    settings.init_train(rng, 100);
 
     settings.print_input_and_target();
 
