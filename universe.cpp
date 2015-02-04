@@ -2,6 +2,28 @@
 #include "universe.hpp"
 #include "utility.hpp"
 
+//initializes the INPUT and TARGET fields with random data
+//of train_length length. 
+//alternatively we could set these manually in main
+void Universe::init_train(Settings & settings, const size_t train_length)
+{
+    for(size_t i=0; i<train_length; ++i) {
+        input.push_back(settings.rng.grammar_dis(settings.rng.gen));
+        target.push_back(settings.rng.grammar_dis(settings.rng.gen));
+    }
+}
+
+void Universe::init_train(Settings & settings, const size_t input_length, const size_t target_length)
+{
+    for(size_t i=0; i<input_length; ++i) {
+        input.push_back(settings.rng.grammar_dis(settings.rng.gen));
+    }
+    for(size_t i=0; i<target_length; ++i) {
+        target.push_back(settings.rng.grammar_dis(settings.rng.gen));
+    }
+}
+
+
 void Universe::populate_universe(Settings & settings)
 {
     LSystem rls = LSystem::generate_random_lsystem(settings.rng);
@@ -11,8 +33,28 @@ void Universe::populate_universe(Settings & settings)
     }
 }
 
+
+//print out our input and target fields we wish to match to
+void Universe::print_input_and_target()
+{
+    std::cout << "INPUT: "  << std::endl;
+    for(size_t i=0; i<input.size(); ++i) {
+        std::cout << (char) ('A' + input[i]) << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "TARGET: " << std::endl;
+    for(size_t i=0; i<target.size(); ++i) {
+        std::cout << (char) ('A' + target[i]) << " ";
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+}
+
 void Universe::run(Settings & settings)
 {
+    assert("you probably don't intend for your input to be totally empty, try calling: `universe.init_train()` to populate with random data" && input.size() != 0);
+
     //store how far away from target each system in population is
     std::vector<int> distances(population.size());
 
@@ -21,8 +63,8 @@ void Universe::run(Settings & settings)
     for(size_t i=0; i<settings.max_iterations; ++i) {
         //perform run through
         for(size_t j=0; j<population.size(); ++j) {
-            population[j].iterate(settings.input, settings.run_iterations);
-            distances[j] = population[j].distance(settings.target);
+            population[j].iterate(input, settings.run_iterations);
+            distances[j] = population[j].distance(target);
         }
 
         const double average_distance = mean(distances);
@@ -59,14 +101,14 @@ void Universe::run(Settings & settings)
         //we should exit on perfect success
         if(min_distance == 0) {
             std::cout << "solution found!" << std::endl << std::endl;
-            alpha.iterate_print(settings.input, settings.run_iterations);
+            alpha.iterate_print(input, settings.run_iterations);
             break;
         }
     }
 
     //as a courtesy show the full results
-    population[0].iterate_print(settings.input, settings.run_iterations);
+    population[0].iterate_print(input, settings.run_iterations);
 
     //show the input and target results again for comparison
-    settings.print_input_and_target();
+    print_input_and_target();
 }

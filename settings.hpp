@@ -6,9 +6,6 @@
 
 struct Settings
 {
-    std::vector<int> input;
-    std::vector<int> target;
-
     size_t population_size;  //amount of concurrent systems per generation
     size_t grammar_size;     //variety of grammar to generate (3 would be A B C)
     size_t run_iterations;   //how many iterations should the system run during rewrite stage
@@ -19,8 +16,6 @@ struct Settings
 
     //default settings here
     Settings() : 
-    input(),
-    target(),
     population_size(32),   
     grammar_size(8),       
     run_iterations(10),    
@@ -28,13 +23,7 @@ struct Settings
     print_regularity(10),
     rng{}
     {}
-
-    void init_train(const size_t train_length);
-
-    void init_train(const size_t input_length, const size_t target_length);
-
-    void print_input_and_target();
-
+    
     void set_population_size(const size_t population_size)
     {
         this->population_size = population_size;

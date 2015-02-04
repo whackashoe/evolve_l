@@ -9,18 +9,26 @@
 
 struct Universe
 {
+    std::vector<int> input;
+    std::vector<int> target;
     std::vector<LSystem> population;
 
-    Universe(Settings & settings) : population {}
+    Universe(Settings & settings) : 
+    input{},
+    target{},
+    population {}
     {
-        assert("you probably don't intend for your input to be totally empty, try calling: `settings.init_train()` to populate with random data" && settings.input.size() != 0);
-
         populate_universe(settings);
     }
+
+    void init_train(Settings & settings, const size_t train_length);
+    void init_train(Settings & settings, const size_t input_length, const size_t target_length);
 
     void populate_universe(Settings & settings);
 
     void run(Settings & settings);
+
+    void print_input_and_target();
 };
 
 #endif

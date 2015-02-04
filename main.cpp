@@ -14,9 +14,9 @@ int main(int argc, char ** argv)
     settings.set_rule_mutation_probability(50);
     settings.set_rulepart_insdel_probability(100);
     settings.set_rulerow_insdel_probability(200);
-    settings.init_train(800, 1500);
 
     Universe universe(settings);
+    universe.init_train(settings, 800, 1500);
     universe.run(settings);
 
     return 0;
