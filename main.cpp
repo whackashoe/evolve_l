@@ -3,13 +3,16 @@
 #include <random>
 #include <functional>
 #include <algorithm>
+#include <cassert>
 
-std::vector<int> input { 2,3,0,1,2,3,0,1,2,0,3,0,1,4,1,0,4,0 };
-std::vector<int> target { 2,3,0,1,3,0,4,5,2,3,5,5,2,3 };
-size_t population_size { 100 };
-size_t grammar_size { 7 };
-size_t run_iterations { 10 };
+std::vector<int> input;
+std::vector<int> target;
+
+size_t population_size { 20 };
+size_t grammar_size { 10 };
+size_t run_iterations { 50 };
 size_t max_iterations { 10000000 };
+size_t train_length { 100 };
 
 std::random_device rd;
 std::mt19937_64 gen(rd());
@@ -77,6 +80,12 @@ public:
             stream << std::endl;
         }
 
+        for(int i=0; i<lsys.data.size(); ++i) {
+            stream << lsys.data[i] << " ";
+        }
+
+        stream << std::endl;
+
         return stream;
     }
 
@@ -139,9 +148,9 @@ public:
         return data;
     }
 
-    int distance(std::vector<int> cmp)
+    int distance()
     {
-        return levenshtein_distance(data, cmp);
+        return levenshtein_distance(data, target);
     }
 };
 
@@ -222,12 +231,10 @@ LSystem sexual_reproduction(LSystem a, LSystem b)
 {
     LSystem lsys;
 
-    for(int i=0; i<a.rules.size(); i+=2) {
-        lsys.rules.push_back(a.rules[i]);
-    }
+    int rules_size = std::min(a.rules.size(), b.rules.size());
 
-    for(int i=1; i<b.rules.size(); i+=2) {
-        lsys.rules.push_back(b.rules[i]);
+    for(int i=0; i<rules_size; ++i) {
+        lsys.rules.push_back(i % 2 == 0 ? a.rules[i] : b.rules[i]);
     }
 
     return mutate(lsys);
@@ -235,6 +242,32 @@ LSystem sexual_reproduction(LSystem a, LSystem b)
 
 int main(int argc, char ** argv)
 {
+    for(int i=0; i<train_length; ++i) {
+        input.push_back(grammar_dis(gen));
+        target.push_back(grammar_dis(gen));
+    }
+
+    std::cout << "INPUT:  \t";
+    for(int i=0; i<input.size(); ++i) {
+        std::cout << input[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "TARGET: \t";
+    for(int i=0; i<target.size(); ++i) {
+        std::cout << target[i] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
+    assert(population_size > 0);
+    assert(grammar_size > 0);
+    assert(run_iterations > 0);
+    assert(max_iterations > 0);
+    assert(train_length > 0);
+
+
     std::vector<LSystem> population;
     LSystem rls = generate_random_lsystem();
     for(int i=0; i<population_size; ++i) {
@@ -246,7 +279,7 @@ int main(int argc, char ** argv)
 
         for(int j=0; j<population.size(); ++j) {
             population[j].iterate(input, 5);
-            distances.push_back(population[j].distance(target));
+            distances.push_back(population[j].distance());
         }
 
         float average_distance = std::accumulate(distances.begin(), distances.end(), 0.0) / distances.size();
@@ -272,8 +305,10 @@ int main(int argc, char ** argv)
         }
 
 
-        std::cout << *min_distance << "\t" << average_distance << std::endl;
-        std::cout << best << std::endl;
+        if(i % 1000 == 0) {
+            std::cout << i << "\t" << *min_distance << "\t" << average_distance << std::endl;
+            std::cout << best << std::endl;
+        }
         /*
         auto best = population[std::distance(distances.begin(), min_distance)];
         for(int k=0; k<best.data.size(); ++k) {
