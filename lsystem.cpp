@@ -6,7 +6,7 @@
 #include "rng.hpp"
 
 
-LSystem::LSystem() {}
+LSystem::LSystem() : rules(), data() {}
 
 
 bool LSystem::match(int data_p, int rule_p) const
@@ -16,7 +16,7 @@ bool LSystem::match(int data_p, int rule_p) const
         return false;
     }
 
-    for(int i=0; i<rule_s; ++i) {
+    for(size_t i=0; i<rule_s; ++i) {
         if(data[data_p + i] != rules[rule_p].from[i]) {
             return false;
         }
@@ -29,10 +29,10 @@ void LSystem::iterate()
 {
     std::vector<int> rval;
 
-    for(int i=0; i<data.size(); ) {
+    for(size_t i=0; i<data.size(); ) {
         bool found = false;
 
-        for(int j=0; j<rules.size(); ++j) {
+        for(size_t j=0; j<rules.size(); ++j) {
             auto r = rules[j];
 
             if(match(i, j)) {
@@ -69,9 +69,9 @@ int LSystem::distance(const std::vector<int> & target) const
 
 void LSystem::mutate(Rng & rng)
 {
-    for(int i=0; i<rules.size(); ++i) {
+    for(size_t i=0; i<rules.size(); ++i) {
         //from group
-        for(int j=0; j<rules[i].from.size(); ++j) {
+        for(size_t j=0; j<rules[i].from.size(); ++j) {
             if(rng.mutate_dis(rng.gen) == 0) {
                 rules[i].from[j] = rng.grammar_dis(rng.gen);
             }
@@ -86,7 +86,7 @@ void LSystem::mutate(Rng & rng)
         }
 
         //to group
-        for(int j=0; j<rules[i].to.size(); ++j) {
+        for(size_t j=0; j<rules[i].to.size(); ++j) {
             if(rng.mutate_dis(rng.gen) == 0) {
                 rules[i].to[j] = rng.grammar_dis(rng.gen);
             }
@@ -126,9 +126,9 @@ LSystem LSystem::sexual_reproduction(const LSystem & a, const LSystem & b, Rng &
 {
     LSystem lsys;
 
-    int rules_size = std::min(a.rules.size(), b.rules.size());
+    size_t rules_size = std::min(a.rules.size(), b.rules.size());
 
-    for(int i=0; i<rules_size; ++i) {
+    for(size_t i=0; i<rules_size; ++i) {
         lsys.rules.push_back(i % 2 == 0 ? a.rules[i] : b.rules[i]);
     }
 

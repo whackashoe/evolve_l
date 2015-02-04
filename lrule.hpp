@@ -13,7 +13,7 @@ struct LRule
         std::mt19937_64 & gen,
         std::uniform_int_distribution<int> & rng_dis, 
         std::uniform_int_distribution<int> & grammar_dis
-    ) {
+    ) : from(), to() {
         do {
             from.push_back(grammar_dis(gen));
         } while(rng_dis(gen) < 200);

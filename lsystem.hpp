@@ -16,21 +16,21 @@ struct LSystem
 
     friend std::ostream& operator<< (std::ostream& stream, const LSystem& lsys)
     {
-        for(int i=0; i<lsys.rules.size(); ++i) {
+        for(size_t i=0; i<lsys.rules.size(); ++i) {
             stream << "FROM: \t";
-            for(int j=0; j<lsys.rules[i].from.size(); ++j) {
+            for(size_t j=0; j<lsys.rules[i].from.size(); ++j) {
                 stream << lsys.rules[i].from[j] << " ";
             }
             stream << std::endl;
 
             stream << "TO: \t";
-            for(int j=0; j<lsys.rules[i].to.size(); ++j) {
+            for(size_t j=0; j<lsys.rules[i].to.size(); ++j) {
                 stream << lsys.rules[i].to[j] << " ";
             }
             stream << std::endl;
         }
 
-        for(int i=0; i<lsys.data.size(); ++i) {
+        for(size_t i=0; i<lsys.data.size(); ++i) {
             stream << lsys.data[i] << " ";
         }
 
