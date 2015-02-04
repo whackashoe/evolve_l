@@ -1,6 +1,8 @@
 #include "settings.hpp"
 
-
+//initializes the INPUT and TARGET fields with random data
+//of train_length length. 
+//alternatively we could set these manually in main
 void Settings::init_train(Rng & rng, const size_t train_length)
 {
     for(size_t i=0; i<train_length; ++i) {
@@ -9,6 +11,7 @@ void Settings::init_train(Rng & rng, const size_t train_length)
     }
 }
 
+//print out our input and target fields we wish to match to
 void Settings::print_input_and_target()
 {
     std::cout << "INPUT: "  << std::endl;

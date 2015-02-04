@@ -8,7 +8,7 @@
 
 LSystem::LSystem() : rules(), data() {}
 
-
+//just a way to print stuff out easily
 std::ostream& operator<< (std::ostream& stream, const LSystem& lsys)
 {
     for(size_t i=0; i<lsys.rules.size(); ++i) {
@@ -34,50 +34,61 @@ std::ostream& operator<< (std::ostream& stream, const LSystem& lsys)
     return stream;
 }
 
+//does a rule match our current position?
 bool LSystem::match(const int data_p, const int rule_p) const
 {
     auto rule_s = rules[rule_p].from.size();
+    //if the rule from size in addition to our current data position is larger than the overall data size....
     if(data_p + rule_s > data.size()) {
         return false;
     }
 
+    //check that each predicate for rule matches
     for(size_t i=0; i<rule_s; ++i) {
         if(data[data_p + i] != rules[rule_p].from[i]) {
             return false;
         }
     }
 
+    //they do match :D
     return true;
 }
 
 void LSystem::iterate()
 {
-    std::vector<int> rval;
-    rval.reserve(data.size());
+    std::vector<int> buf;
+    buf.reserve(data.size());
 
+    //run through each bit of our data
     for(size_t i=0; i<data.size(); ) {
         bool found = false;
 
+        //check all rules to see if we can apply them
         for(size_t j=0; j<rules.size(); ++j) {
             auto r = rules[j];
 
             if(match(i, j)) {
-                rval.insert(rval.end(), r.to.begin(), r.to.end());
+                //insert rules TO data to the end of our buffer and skip ahead
+                buf.insert(buf.end(), r.to.begin(), r.to.end());
                 found = true;
-                i += r.from.size();
+                //skip ahead however many FROM size
+                i += r.from.size(); //i++; //we could also do this?
                 break;
             }
         }
 
+        //if no rules matches, we just add data back here
         if(! found) {
-            rval.push_back(data[i]);
+            buf.push_back(data[i]);
             ++i;
         }
     }
 
-    data = rval;
+    //set our internal data to our buffer
+    data = buf;
 }
 
+//utility function
 void LSystem::iterate(const std::vector<int> & axiom, int n)
 {
     data = axiom;
@@ -87,6 +98,7 @@ void LSystem::iterate(const std::vector<int> & axiom, int n)
     }
 }
 
+//figure out how far away we are from our goal
 int LSystem::distance(const std::vector<int> & target) const
 {
     return levenshtein_distance(data, target);
@@ -147,6 +159,7 @@ LSystem LSystem::generate_random_lsystem(Rng & rng)
     return lsys;
 }
 
+//splices two lsystems together
 LSystem LSystem::sexual_reproduction(const LSystem & a, const LSystem & b, Rng & rng)
 {
     LSystem lsys;

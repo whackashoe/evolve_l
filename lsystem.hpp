@@ -7,6 +7,12 @@
 #include "lrule.hpp"
 #include "rng.hpp"
 
+/*
+ * special lsystem
+ * this one allows for multiple predicates to a rule
+ * and has mutation / reproductive ability
+ * read more here: http://en.wikipedia.org/wiki/L-system
+*/
 struct LSystem
 {
     std::vector<LRule> rules;
