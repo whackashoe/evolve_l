@@ -13,4 +13,4 @@ Somewhat interesting as this approach is able to evolve rewrite systems that are
 
 Our goal is to generate a series of rules that over N iterations will transform INPUT to TARGET
 
-The scoring function for this is leichtenshtein distance.
+The scoring function for this is levenshtein distance.
