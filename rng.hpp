@@ -12,6 +12,7 @@ struct Rng
     std::uniform_int_distribution<int> mutate_dis;      //how often to mutate a piece of a rule
     std::uniform_int_distribution<int> mutate_ins_dis;  //how often should we create or delete a piece of a rule
     std::uniform_int_distribution<int> mutate_rins_dis; //how often should we create or delete a rule
+    std::uniform_int_distribution<int> binary_dis;      //binary rng rule
 
     Rng() : 
     rd(),
@@ -20,7 +21,8 @@ struct Rng
     rng_dis(0, 1000),
     mutate_dis(0, 200),
     mutate_ins_dis(0, 400),
-    mutate_rins_dis(0, 800)
+    mutate_rins_dis(0, 800),
+    binary_dis(0, 1)
     {}
 };
 

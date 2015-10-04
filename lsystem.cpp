@@ -181,7 +181,7 @@ LSystem LSystem::sexual_reproduction(const LSystem & a, const LSystem & b, Rng &
     size_t rules_size = std::min(a.rules.size(), b.rules.size());
 
     for(size_t i=0; i<rules_size; ++i) {
-        lsys.rules.push_back(i % 2 == 0 ? a.rules[i] : b.rules[i]);
+        lsys.rules.push_back(rng.binary_dis(rng.gen) == 0 ? a.rules[i] : b.rules[i]);
     }
 
     lsys.mutate(rng);
