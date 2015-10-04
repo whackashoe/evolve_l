@@ -25,7 +25,7 @@ std::ostream& operator<< (std::ostream& stream, const LSystem& lsys)
         stream << std::endl;
     }
 
-    for(size_t i=0; i<lsys.data.size(); ++i) {
+    for(size_t i=0; i<lsys.data.size() && i < 40; ++i) {
         stream << (char) ('A' + lsys.data[i]) << " ";
     }
 
